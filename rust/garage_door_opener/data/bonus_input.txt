@@ -1,0 +1,10 @@
+button_clicked
+cycle_complete
+button_clicked
+block_detected
+button_clicked
+cycle_complete
+button_clicked
+block_cleared
+button_clicked
+cycle_complete

@@ -1,7 +1,11 @@
+#![feature(box_patterns)]
+
 use std::fmt;
 use std::io;
 use std::io::prelude::*;
 use std::str::FromStr;
+
+type Previous = Box<State>;
 
 #[allow(non_camel_case_types)]
 #[derive(Debug)]
@@ -12,9 +16,29 @@ enum State {
     OPEN,
     STOPPED_WHILE_CLOSING,
     STOPPED_WHILE_OPENING,
+    EMERGENCY_OPENING,
+    Blocked(Previous),
+}
+
+impl fmt::Display for State {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        use State::*;
+        match *self {
+            CLOSING |
+            CLOSED |
+            OPENING |
+            OPEN |
+            STOPPED_WHILE_OPENING |
+            STOPPED_WHILE_CLOSING |
+            EMERGENCY_OPENING => write!(f, "Door: {:?}", self),
+            Blocked(box ref state) => write!(f, "Door: BLOCKED_{:?}", state),
+        }
+    }
 }
 
 enum Event {
+    BlockDetected,
+    BlockCleared,
     ButtonClicked,
     CycleComplete,
 }
@@ -28,6 +52,8 @@ impl FromStr for Event {
         match s {
             "button_clicked" => Ok(Event::ButtonClicked),
             "cycle_complete" => Ok(Event::CycleComplete),
+            "block_detected" => Ok(Event::BlockDetected),
+            "block_cleared" => Ok(Event::BlockCleared),
             _ => Err(EventParseError {}),
         }
     }
@@ -35,22 +61,22 @@ impl FromStr for Event {
 
 impl fmt::Debug for Event {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        use Event::*;
         match *self {
-            Event::ButtonClicked => write!(f, "> Button clicked."),
-            Event::CycleComplete => write!(f, "> Cycle complete."),
+            ButtonClicked => write!(f, "> Button clicked."),
+            CycleComplete => write!(f, "> Cycle complete."),
+            BlockDetected => write!(f, "> Block detected!"),
+            BlockCleared => write!(f, "> Block cleared."),
         }
     }
 }
 
 fn main() {
+    use State::*;
     let stdin = io::stdin();
     let mut state = State::CLOSED;
 
-    let print_state = |state: &State| {
-        println!("Door: {:?}", state);
-    };
-
-    print_state(&state);
+    println!("{}", state);
 
     for line in stdin.lock().lines() {
         let event: Event = line.unwrap()
@@ -62,23 +88,36 @@ fn main() {
         state = match event {
             Event::ButtonClicked => {
                 match state {
-                    State::CLOSED |
-                    State::STOPPED_WHILE_CLOSING => State::OPENING,
-                    State::OPEN |
-                    State::STOPPED_WHILE_OPENING => State::CLOSING,
-                    State::CLOSING => State::STOPPED_WHILE_CLOSING,
-                    State::OPENING => State::STOPPED_WHILE_OPENING,
+                    CLOSED |
+                    STOPPED_WHILE_CLOSING => OPENING,
+                    OPEN |
+                    STOPPED_WHILE_OPENING => CLOSING,
+                    CLOSING => STOPPED_WHILE_CLOSING,
+                    OPENING => STOPPED_WHILE_OPENING,
+                    other => other, // We are blocked, ignore clicks
                 }
             }
             Event::CycleComplete => {
                 match state {
-                    State::OPENING => State::OPEN,
-                    State::CLOSING => State::CLOSED,
-                    other => other,
+                    OPENING => OPEN,
+                    CLOSING => CLOSED,
+                    EMERGENCY_OPENING => Blocked(Box::new(OPEN)),
+                    other => other, // not moving right now
+                }
+            }
+            Event::BlockDetected => {
+                match state {
+                    CLOSING | OPENING => EMERGENCY_OPENING,
+                    other => Blocked(Box::new(other)), // already blocked
+                }
+            }
+            Event::BlockCleared => {
+                match state {
+                    Blocked(box x) => x,
+                    other => other, // not blocked, do nothing
                 }
             }
         };
-
-        print_state(&state);
+        println!("{}", state);
     }
 }
