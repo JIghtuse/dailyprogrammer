@@ -5,11 +5,11 @@ use std::io;
 use std::io::prelude::*;
 use std::str::FromStr;
 
-type Previous = Box<State>;
+type Previous = Box<DoorState>;
 
 #[allow(non_camel_case_types)]
 #[derive(Debug)]
-enum State {
+enum DoorState {
     CLOSING,
     CLOSED,
     OPENING,
@@ -20,9 +20,9 @@ enum State {
     Blocked(Previous),
 }
 
-impl fmt::Display for State {
+impl fmt::Display for DoorState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        use State::*;
+        use DoorState::*;
         match *self {
             CLOSING |
             CLOSED |
@@ -72,9 +72,9 @@ impl fmt::Debug for Event {
 }
 
 fn main() {
-    use State::*;
+    use DoorState::*;
     let stdin = io::stdin();
-    let mut state = State::CLOSED;
+    let mut state = DoorState::CLOSED;
 
     println!("{}", state);
 
