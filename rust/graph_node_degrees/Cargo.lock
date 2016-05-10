@@ -1,0 +1,4 @@
+[root]
+name = "graph_node_degrees"
+version = "0.1.0"
+

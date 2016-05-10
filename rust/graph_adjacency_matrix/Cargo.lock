@@ -1,0 +1,4 @@
+[root]
+name = "graph_adjacency_matrix"
+version = "0.1.0"
+
