@@ -1,5 +1,7 @@
 use std::convert::From;
-use std::io::{self, Write};
+use std::fs::File;
+use std::io;
+use std::io::prelude::*;
 use std::num;
 
 #[derive(Debug)]
@@ -22,6 +24,7 @@ impl From<num::ParseIntError> for DataError {
     }
 }
 
+#[derive(Debug)]
 struct UserData {
     name: String,
     age: u32,
@@ -48,6 +51,12 @@ fn get_user_data(stdin: &io::Stdin) -> Result<UserData> {
     })
 }
 
+fn save_user_data(filename: &str, data: &UserData) -> Result<()> {
+    let mut buffer = try!(File::create(filename));
+    try!(buffer.write_fmt(format_args!("{:?}", data)));
+    Ok(())
+}
+
 fn main() {
     let stdin = io::stdin();
 
@@ -56,6 +65,7 @@ fn main() {
             print!("your name is {}", user_data.name);
             print!(", you are {} age old", user_data.age);
             println!(", and your username is {}", user_data.username);
+            save_user_data("user_data.txt", &user_data);
         }
         Err(e) => println!("Error: {:?}", e),
     }
