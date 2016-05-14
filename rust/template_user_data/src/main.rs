@@ -6,21 +6,21 @@ use std::num;
 
 #[derive(Debug)]
 enum DataError {
-    IoError,
-    ParseError,
+    Io,
+    Parse,
 }
 
 type Result<T> = std::result::Result<T, DataError>;
 
 impl From<io::Error> for DataError {
     fn from(_: io::Error) -> Self {
-        DataError::IoError
+        DataError::Io
     }
 }
 
 impl From<num::ParseIntError> for DataError {
     fn from(_: num::ParseIntError) -> Self {
-        DataError::ParseError
+        DataError::Parse
     }
 }
 
