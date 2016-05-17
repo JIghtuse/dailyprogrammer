@@ -20,22 +20,22 @@ fn get_prefix(number: u32) -> &'static str {
     }
 }
 
-fn print_placements(min_number: u32, max_number: u32, number: u32) {
+fn print_placements(min_place: u32, max_place: u32, our_dog_place: u32) {
     let print_place = |i: u32| print!("{}{} ", i, get_prefix(i));
 
-    for i in min_number..number {
+    for i in min_place..our_dog_place {
         print_place(i);
     }
-    for i in number + 1..max_number + 1 {
+    for i in our_dog_place + 1..max_place + 1 {
         print_place(i);
     }
     println!("");
 }
 
 fn main() {
-    let min_number = 1;
-    let max_number = 100;
-    let number = get_number();
+    let min_place = 1;
+    let max_place = 100;
+    let our_dog_place = get_number();
 
-    print_placements(min_number, max_number, number);
+    print_placements(min_place, max_place, our_dog_place);
 }
