@@ -7,19 +7,25 @@ fn get_number() -> u32 {
 }
 
 fn get_prefix(number: u32) -> &'static str {
-    match number % 10 {
-        1 => "st",
-        2 => "nd",
-        3 => "rd",
-        _ => "th",
+    match number % 100 {
+        11 | 12 | 13 => "th",
+        n => {
+            match n % 10 {
+                1 => "st",
+                2 => "nd",
+                3 => "rd",
+                _ => "th",
+            }
+        }
     }
 }
 
 fn main() {
+    let min_number = 1;
     let max_number = 100;
     let number = get_number();
 
-    for i in 0..number {
+    for i in min_number..number {
         print!("{}{} ", i, get_prefix(i));
     }
     for i in number + 1..max_number + 1 {
