@@ -53,7 +53,7 @@ fn variance(data: &[f32]) -> Option<f32> {
         for &x in data {
             sum += (x - mean).powi(2);
         }
-        Some(sum / (data.len() - 1) as f32)
+        Some(sum / data.len() as f32)
     }
 }
 
