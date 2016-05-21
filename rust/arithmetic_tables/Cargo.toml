@@ -1,0 +1,6 @@
+[package]
+name = "arithmetic_tables"
+version = "0.1.0"
+authors = ["Boris Egorov <egorov@linux.com>"]
+
+[dependencies]
