@@ -4,6 +4,7 @@
 * [#037 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/rzdwq/482012_challenge_37_easy/) - [Word/line count](rust/wc/src/main.rs)
 * [#089 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/yj2zq/8202012_challenge_89_easy_simple_statistical/) - [Simple statistical functions](rust/simple_statistics/src/main.rs)
 * [#098 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/zx8vw/9152012_challenge_98_easy_arithmetic_tables/) - [Arithmetic tables](rust/arithmetic_tables/src/main.rs)
+* [#131 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/1heozl/070113_challenge_131_easy_who_tests_the_tests/) - [Who tests the tests?](rust/testing_tests/src/main.rs)
 * [#132 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/1hvh6u/070813_challenge_132_easy_greatest_common_divisor/) - [Greatest Common Divisor](rust/gcd/src/main.rs)
 * [#137 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/1m1jam/081313_challenge_137_easy_string_transposition/) - [String Transposition](rust/string_transposition/src/main.rs)
 * [#224 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/3e0hmh/20150720_challenge_224_easy_shuffling_a_list/) - [Shuffling a List](rust/list_shuffling/src/main.rs)
