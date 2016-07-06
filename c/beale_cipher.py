@@ -2,16 +2,11 @@
 
 
 def decrypt_and_print(key_path, message_path):
-    key = []
-    with open(key_path) as fp:
-        line = fp.readlines()[0]
-        key = ''.join((s[0] for s in line.split()))
-
-    message = open(message_path).readlines()[0]
-    for i in message.split(","):
-        i = int(i) % len(key)
-        print(key[i - 1][0], end='')
-    print()
+    words = open(key_path).read().split()
+    positions = open(message_path).read().split(",")
+    positions = (int(i) % len(words) for i in positions)
+    message = ''.join(words[i - 1][0] for i in positions)
+    print(message)
 
 
 def main():
