@@ -14,3 +14,4 @@
 * [#266 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/4ijtrt/20160509_challenge_266_easy_basic_graph/) - [Graph Node Degrees](rust/graph_node_degrees/src/main.rs), [Graph Adjacency Matrix](rust/graph_adjacency_matrix/src/main.rs)
 * [#267 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/4jom3a/20160516_challenge_267_easy_all_the_places_your/) - [All the places your dog didn't win](rust/dog_placements/src/main.rs)
 * [#269 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/4lpygb/20160530_challenge_269_easy_basic_formatting/) - [BASIC Formatting](rust/basic_formatting/src/main.rs)
+* [#274 (easy)](https://www.reddit.com/r/dailyprogrammer/comments/4r8fod/20160704_challenge_274_easy_gold_and_treasure_the/) - [The Beale Cipher](python/beale_cipher.py)
